@@ -12,6 +12,8 @@ if exists("b:did_indent")
 endif
 let b:did_indent = 1
 
+let b:undo_indent = 'setlocal indentexpr< indentkeys< smartindent<'
+
 setlocal indentexpr=GetShIndent()
 setlocal indentkeys+=0=then,0=do,0=else,0=elif,0=fi,0=esac,0=done,0=end,),0=;;,0=;&
 setlocal indentkeys+=0=fin,0=fil,0=fip,0=fir,0=fix
