@@ -67,7 +67,7 @@ function! GetShIndent()
     if !s:is_case_ended(line)
       let ind += s:indent_value('case-statements')
     endif
-  elseif line =~ '^\s*\<\k\+\>\s*()\s*{' || line =~ '^\s*{' || line =~ '^\s*function\s*\k\+\s*\%(()\)\?\s*{'
+  elseif line =~ '^\s*\<\k\+\>\s*()\s*{' || line =~ '^\s*{' || line =~ '^\s*function\s*\w\S\+\s*\%(()\)\?\s*{'
     if line !~ '}\s*\%(#.*\)\=$'
       let ind += s:indent_value('default')
     endif
