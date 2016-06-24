@@ -102,6 +102,8 @@ function! GetShIndent()
     endif
   elseif s:is_case_break(line)
     let ind -= s:indent_value('case-breaks')
+  elseif s:is_here_doc(line)
+    let ind = 0
   endif
 
   return ind
@@ -160,6 +162,14 @@ function! s:is_case_break(line)
   return a:line =~ '^\s*;[;&]'
 endfunction
 
+function! s:is_here_doc(line)
+    if a:line =~ '^\w\+$'
+	let here_pat = '<<-\?'. s:escape(a:line). '\$'
+	return search(here_pat, 'bnW') > 0
+    endif
+    return 0
+endfunction
+
 function! s:is_case_ended(line)
   return s:is_case_break(a:line) || a:line =~ ';[;&]\s*\%(#.*\)\=$'
 endfunction
@@ -170,6 +180,10 @@ function! s:is_case_empty(line)
   else
     return a:line =~ '^\s*case\>'
   endif
+endfunction
+
+function! s:escape(pattern)
+    return '\V'. escape(a:pattern, '\\')
 endfunction
 
 let &cpo = s:cpo_save
