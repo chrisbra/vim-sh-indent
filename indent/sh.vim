@@ -3,9 +3,15 @@
 " Maintainer:          Christian Brabandt <cb@256bit.org>
 " Previous Maintainer: Peter Aronoff <telemachus@arpinum.org>
 " Original Author:     Nikolai Weibull <now@bitwi.se>
-" Latest Revision:     2016-02-15
+" Latest Revision:     2016-06-27
 " License:             Vim (see :h license)
 " Repository:          https://github.com/chrisbra/vim-sh-indent
+" Changelog:
+"          20160627: - detect heredocs correctly
+"          20160213: - detect function definition correctly
+"          20160202: - use shiftwidth() function
+"          20151215: - set b:undo_indent variable
+"          20150728: - add foreach detection for zsh
 
 if exists("b:did_indent")
   finish
