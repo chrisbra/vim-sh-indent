@@ -7,6 +7,7 @@
 " License:             Vim (see :h license)
 " Repository:          https://github.com/chrisbra/vim-sh-indent
 " Changelog:
+"          20160912: - preserve indentation of here-doc blocks
 "          20160627: - detect heredocs correctly
 "          20160213: - detect function definition correctly
 "          20160202: - use shiftwidth() function
@@ -110,6 +111,9 @@ function! GetShIndent()
     let ind -= s:indent_value('case-breaks')
   elseif s:is_here_doc(line)
     let ind = 0
+  " statements, executed within a here document. Keep the current indent
+  elseif match(map(synstack(v:lnum, 1), 'synIDattr(v:val, "name")'), '\c\mheredoc') > -1
+    return indent(v:lnum)
   endif
 
   return ind
