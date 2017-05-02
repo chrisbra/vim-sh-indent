@@ -34,15 +34,11 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-function s:buffer_shiftwidth()
-  return shiftwidth()
-endfunction
-
 let s:sh_indent_defaults = {
-      \ 'default': function('s:buffer_shiftwidth'),
-      \ 'continuation-line': function('s:buffer_shiftwidth'),
-      \ 'case-labels': function('s:buffer_shiftwidth'),
-      \ 'case-statements': function('s:buffer_shiftwidth'),
+      \ 'default': function('shiftwidth'),
+      \ 'continuation-line': function('shiftwidth'),
+      \ 'case-labels': function('shiftwidth'),
+      \ 'case-statements': function('shiftwidth'),
       \ 'case-breaks': 0 }
 
 function! s:indent_value(option)
