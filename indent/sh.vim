@@ -117,7 +117,8 @@ function! GetShIndent()
 endfunction
 
 function! s:is_continuation_line(line)
-  return a:line =~ '\%(\%(^\|[^\\]\)\\\|&&\|||\)$'
+  return a:line =~ '\%(\%(^\|[^\\]\)\\\|&&\|||\||\)' .
+                 \ '\s*\({\s*\)\=\(#.*\)\=$'
 endfunction
 
 function! s:find_continued_lnum(lnum)
