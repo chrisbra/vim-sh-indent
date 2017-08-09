@@ -3,10 +3,11 @@
 " Maintainer:          Christian Brabandt <cb@256bit.org>
 " Previous Maintainer: Peter Aronoff <telemachus@arpinum.org>
 " Original Author:     Nikolai Weibull <now@bitwi.se>
-" Latest Revision:     2017-05-02
+" Latest Revision:     2017-08-08
 " License:             Vim (see :h license)
 " Repository:          https://github.com/chrisbra/vim-sh-indent
 " Changelog:
+"          20170808: - better indent of line continuation
 "          20170502: - get rid of buffer-shiftwidth function
 "          20160912: - preserve indentation of here-doc blocks
 "          20160627: - detect heredocs correctly
