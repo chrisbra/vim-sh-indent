@@ -64,7 +64,8 @@ function! GetShIndent()
 
   let ind = indent(lnum)
   let line = getline(lnum)
-  if line =~ '^\s*\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>'
+  if line =~ '^\s*\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>' ||
+        \  (&ft is# 'zsh' && line =~ '\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>')
     if line !~ '\<\%(fi\|esac\|done\|end\)\>\s*\%(#.*\)\=$'
       let ind += s:indent_value('default')
     endif
