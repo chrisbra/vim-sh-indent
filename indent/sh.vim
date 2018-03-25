@@ -83,6 +83,8 @@ function! GetShIndent()
     if pnum == 0 || !s:is_continuation_line(pline)
       let ind += s:indent_value('continuation-line')
     endif
+  elseif s:end_block(line)
+    let ind = 0
   elseif pnum != 0 && s:is_continuation_line(pline)
     " only add indent, if line and pline is in the same block
     let i = v:lnum
@@ -224,6 +226,10 @@ endfunction
 
 function! s:is_empty(line)
   return a:line =~ '^\s*$'
+endfunction
+
+function! s:end_block(line)
+  return a:line =~ '^\s*}'
 endfunction
 
 let &cpo = s:cpo_save

@@ -96,4 +96,40 @@ echo "Failed to move to build directory"
 exit 1
 }
 
+echo this example below works
+[[ true  ]] && {
+	:
+} || {
+	:
+}
+  echo 'this line should not be indented'
+
+echo this example below NOT works
+[[ true  ]] &&
+	{
+		:
+	} || {
+		:
+		}
+  echo 'this line should not be indented'
+
+echo this example below NOT works
+[[ true  ]] &&
+  {
+    :
+  } || {
+    :
+    }
+  echo 'this line should not be indented'
+
+echo this example below NOT works
+[[ true  ]] &&
+  {
+    :
+  } ||
+    {
+      :
+    }
+    echo 'this line should not be indented'
+
 # vim:sw=0:sts=-1:ts=2
