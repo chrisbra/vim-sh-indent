@@ -73,7 +73,8 @@ function! GetShIndent()
     if !s:is_case_ended(line)
       let ind += s:indent_value('case-statements')
     endif
-  elseif line =~ '^\s*\<\k\+\>\s*()\s*{' || line =~ '^\s*{' || line =~ '^\s*function\s*\w\S\+\s*\%(()\)\?\s*{'
+  " function definition
+  elseif s:is_function_definition(line)
     if line !~ '}\s*\%(#.*\)\=$'
       let ind += s:indent_value('default')
     endif
@@ -129,6 +130,12 @@ function! s:find_continued_lnum(lnum)
     let i -= 1
   endwhile
   return i
+endfunction
+
+function! s:is_function_definition(line)
+  return a:line =~ '^\s*\<\k\+\>\s*()\s*{' ||
+       \ a:line =~ '^\s*{' ||
+       \ a:line =~ '^\s*function\s*\w\S\+\s*\%(()\)\?\s*{'
 endfunction
 
 function! s:is_case_label(line, pnum)
