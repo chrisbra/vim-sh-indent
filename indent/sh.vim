@@ -59,11 +59,12 @@ function! GetShIndent()
   if lnum == 0
     return 0
   endif
+  let line = getline(lnum)
 
   let pnum = prevnonblank(lnum - 1)
-
+  let pline = getline(pnum)
   let ind = indent(lnum)
-  let line = getline(lnum)
+
   if line =~ '^\s*\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>' ||
         \  (&ft is# 'zsh' && line =~ '\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>')
     if line !~ '\<\%(fi\|esac\|done\|end\)\>\s*\%(#.*\)\=$'
@@ -79,11 +80,21 @@ function! GetShIndent()
       let ind += s:indent_value('default')
     endif
   elseif s:is_continuation_line(line)
-    if pnum == 0 || !s:is_continuation_line(getline(pnum))
+    if pnum == 0 || !s:is_continuation_line(pline)
       let ind += s:indent_value('continuation-line')
     endif
-  elseif pnum != 0 && s:is_continuation_line(getline(pnum))
-    let ind = indent(s:find_continued_lnum(pnum))
+  elseif pnum != 0 && s:is_continuation_line(pline)
+    " only add indent, if line and pline is in the same block
+    let i = v:lnum
+    let ind2 = indent(s:find_continued_lnum(pnum))
+    while !s:is_empty(getline(i)) && i > pnum
+      let i -= 1
+    endw
+    if i == pnum
+      let ind += ind2
+    else
+      let ind = ind2
+    endif
   endif
 
   let pine = line
@@ -120,8 +131,16 @@ function! GetShIndent()
 endfunction
 
 function! s:is_continuation_line(line)
-  return a:line =~ '\%(\%(^\|[^\\]\)\\\|&&\|||\||\)' .
+  " Comment, cannot be a line continuation
+  if a:line =~ '^\s*#'
+    return 0
+  else
+    " start-of-line
+    " \\ or && or || or |
+    " followed optionally by { or #
+    return a:line =~ '\%(\%(^\|[^\\]\)\\\|&&\|||\||\)' .
                  \ '\s*\({\s*\)\=\(#.*\)\=$'
+  endif
 endfunction
 
 function! s:find_continued_lnum(lnum)
@@ -201,6 +220,10 @@ endfunction
 
 function! s:escape(pattern)
     return '\V'. escape(a:pattern, '\\')
+endfunction
+
+function! s:is_empty(line)
+  return a:line =~ '^\s*$'
 endfunction
 
 let &cpo = s:cpo_save

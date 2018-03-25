@@ -91,4 +91,9 @@ true &&
 echo ok ||
 echo not ok
 
+cd build || {
+echo "Failed to move to build directory"
+exit 1
+}
+
 # vim:sw=0:sts=-1:ts=2
