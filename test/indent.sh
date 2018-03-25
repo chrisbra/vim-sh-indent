@@ -87,4 +87,8 @@ echo inside
 true && # hello \
   echo inside
 
+true &&
+echo ok ||
+echo not ok
+
 # vim:sw=0:sts=-1:ts=2
