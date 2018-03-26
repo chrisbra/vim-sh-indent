@@ -65,6 +65,7 @@ function! GetShIndent()
   let pline = getline(pnum)
   let ind = indent(lnum)
 
+  " Check contents of previous lines
   if line =~ '^\s*\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>' ||
         \  (&ft is# 'zsh' && line =~ '\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>')
     if line !~ '\<\%(fi\|esac\|done\|end\)\>\s*\%(#.*\)\=$'
@@ -83,9 +84,9 @@ function! GetShIndent()
     if pnum == 0 || !s:is_continuation_line(pline)
       let ind += s:indent_value('continuation-line')
     endif
-  elseif s:end_block(line)
-    let ind = 0
-  elseif pnum != 0 && s:is_continuation_line(pline)
+  elseif s:end_block(line) && !s:start_block(line)
+    let ind -= s:indent_value('default')
+  elseif pnum != 0 && s:is_continuation_line(pline) && !s:end_block(getline(v:lnum))
     " only add indent, if line and pline is in the same block
     let i = v:lnum
     let ind2 = indent(s:find_continued_lnum(pnum))
@@ -100,8 +101,9 @@ function! GetShIndent()
   endif
 
   let pine = line
+  " Check content of current line
   let line = getline(v:lnum)
-  if line =~ '^\s*\%(then\|do\|else\|elif\|fi\|done\|end\)\>' || line =~ '^\s*}'
+  if line =~ '^\s*\%(then\|do\|else\|elif\|fi\|done\|end\)\>' || s:end_block(line)
     let ind -= s:indent_value('default')
   elseif line =~ '^\s*esac\>' && s:is_case_empty(getline(v:lnum - 1))
     let ind -= s:indent_value('default')
@@ -127,9 +129,11 @@ function! GetShIndent()
   " statements, executed within a here document. Keep the current indent
   elseif match(map(synstack(v:lnum, 1), 'synIDattr(v:val, "name")'), '\c\mheredoc') > -1
     return indent(v:lnum)
+  elseif s:is_comment(line) && s:is_empty(getline(v:lnum-1))
+    return indent(v:lnum)
   endif
 
-  return ind
+  return ind > 0 ? ind : 0
 endfunction
 
 function! s:is_continuation_line(line)
@@ -230,6 +234,22 @@ endfunction
 
 function! s:end_block(line)
   return a:line =~ '^\s*}'
+endfunction
+
+function! s:start_block(line)
+  return a:line =~ '{\s*\(#.*\)\?$'
+endfunction
+
+function! s:find_start_block(lnum)
+  let i = a:lnum
+  while i > 1 && !s:start_block(getline(i))
+    let i -= 1
+  endwhile
+  return i
+endfunction
+
+function! s:is_comment(line)
+  return a:line =~ '^\s*#'
 endfunction
 
 let &cpo = s:cpo_save
