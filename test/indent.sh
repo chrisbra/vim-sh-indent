@@ -132,4 +132,10 @@ echo this example below NOT works
     }
     echo 'this line should not be indented'
 
+# Should be indented correctly
+if true; then
+  echo 'pipe beginning' |
+    sed 's/beginn/end/'
+    fi
+
 # vim:sw=0:sts=-1:ts=2
