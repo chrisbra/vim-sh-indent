@@ -112,14 +112,7 @@ function! GetShIndent()
   let pine = line
   " Check content of current line
   let line = curline
-  " Current line is a endif line, so get indent from start of "if condition" line
-  " TODO: should we do the same for other "end" lines?
-  if curline =~ '^\s*\%(fi\)\s*\%(#.*\)\=$'
-    let previous_line = search('if.\{-\};\s*then\s*\%(#.*\)\=$', 'bnW')
-    if previous_line > 0
-      let ind = indent(previous_line)
-    endif
-  elseif line =~ '^\s*\%(then\|do\|else\|elif\|done\|end\)\>' || s:end_block(line)
+  if line =~ '^\s*\%(then\|do\|else\|elif\|fi\|done\|end\)\>' || s:end_block(line)
     let ind -= s:indent_value('default')
   elseif line =~ '^\s*esac\>' && s:is_case_empty(getline(v:lnum - 1))
     let ind -= s:indent_value('default')
