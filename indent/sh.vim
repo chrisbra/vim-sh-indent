@@ -3,10 +3,12 @@
 " Maintainer:          Christian Brabandt <cb@256bit.org>
 " Original Author:     Nikolai Weibull <now@bitwi.se>
 " Previous Maintainer: Peter Aronoff <telemachus@arpinum.org>
-" Latest Revision:     2019-03-19
+" Latest Revision:     2019-03-25
 " License:             Vim (see :h license)
 " Repository:          https://github.com/chrisbra/vim-sh-indent
 " Changelog:
+"          20190325  - Indent fi; correctly
+"                      https://github.com/chrisbra/vim-sh-indent/issues/14
 "          20190319  - Indent arrays (only zsh and bash)
 "                      https://github.com/chrisbra/vim-sh-indent/issues/13
 "          20190316  - Make use of searchpairpos for nested if sections
@@ -124,7 +126,7 @@ function! GetShIndent()
   let line = curline
   " Current line is a endif line, so get indent from start of "if condition" line
   " TODO: should we do the same for other "end" lines?
-  if curline =~ '^\s*\%(fi\)\s*\%(#.*\)\=$'
+  if curline =~ '^\s*\%(fi\);\?\s*\%(#.*\)\=$'
     let previous_line = searchpair('\<if\>', '', '\<fi\>', 'bnW')
     if previous_line > 0
       let ind = indent(previous_line)
