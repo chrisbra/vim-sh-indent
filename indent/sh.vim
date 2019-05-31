@@ -7,6 +7,7 @@
 " License:             Vim (see :h license)
 " Repository:          https://github.com/chrisbra/vim-sh-indent
 " Changelog:
+"          20190603  - Do not indent in zsh filetypes with an `if` in comments
 "          20190428  - De-indent fi correctly when typing with
 "                      https://github.com/chrisbra/vim-sh-indent/issues/15
 "          20190325  - Indent fi; correctly
@@ -80,8 +81,9 @@ function! GetShIndent()
   let ind = indent(lnum)
 
   " Check contents of previous lines
+  " should not apply to e.g. commented lines
   if line =~ '^\s*\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>' ||
-        \  (&ft is# 'zsh' && line =~ '\<\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>')
+        \  (&ft is# 'zsh' && line =~ '^\s*\<\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>')
     if !s:is_end_expression(line)
       let ind += s:indent_value('default')
     endif
