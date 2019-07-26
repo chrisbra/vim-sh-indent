@@ -3,10 +3,12 @@
 " Maintainer:          Christian Brabandt <cb@256bit.org>
 " Original Author:     Nikolai Weibull <now@bitwi.se>
 " Previous Maintainer: Peter Aronoff <telemachus@arpinum.org>
-" Latest Revision:     2019-04-27
+" Latest Revision:     2019-07-26
 " License:             Vim (see :h license)
 " Repository:          https://github.com/chrisbra/vim-sh-indent
 " Changelog:
+"          20190726  - Correctly skip if keywords in syntax comments
+"                      (issue #17)
 "          20190603  - Do not indent in zsh filetypes with an `if` in comments
 "          20190428  - De-indent fi correctly when typing with
 "                      https://github.com/chrisbra/vim-sh-indent/issues/15
