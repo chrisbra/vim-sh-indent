@@ -131,9 +131,8 @@ function! GetShIndent()
   " Current line is a endif line, so get indent from start of "if condition" line
   " TODO: should we do the same for other "end" lines?
   if curline =~ '^\s*\%(fi\);\?\s*\%(#.*\)\=$'
-    "let previous_line = searchpair('\<if\>', '', '\<fi\>\zs', 'bnW', 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment")
     let ind = indent(v:lnum)
-    let previous_line = searchpair('\<if\>', '', '\<fi\>\zs', 'bnW', 'getline(".") =~ "^\\s*#"')
+    let previous_line = searchpair('\<if\>', '', '\<fi\>\zs', 'bnW', 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment"')
     if previous_line > 0
       let ind = indent(previous_line)
     endif
