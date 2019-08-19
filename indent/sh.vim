@@ -195,7 +195,7 @@ endfunction
 function! s:is_function_definition(line)
   return a:line =~ '^\s*\<\k\+\>\s*()\s*{' ||
        \ a:line =~ '^\s*{' ||
-       \ a:line =~ '^\s*function\s*\w\S\+\s*\%(()\)\?\s*{'
+       \ a:line =~ '^\s*function\s*\k\+\s*\%(()\)\?\s*{'
 endfunction
 
 function! s:is_array(line)
