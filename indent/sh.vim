@@ -134,7 +134,7 @@ function! GetShIndent()
   " TODO: should we do the same for other "end" lines?
   if curline =~ '^\s*\%(fi\);\?\s*\%(#.*\)\=$'
     let ind = indent(v:lnum)
-    let previous_line = searchpair('\<if\>', '', '\<fi\>\zs', 'bnW', 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote"')
+    let previous_line = searchpair('^\s*\<if\>', '', '\<fi\>\zs', 'bnW', 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote"')
     if previous_line > 0
       let ind = indent(previous_line)
     endif
