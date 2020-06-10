@@ -1,3 +1,3 @@
 if a; then
-    b if
+  b if
 fi
