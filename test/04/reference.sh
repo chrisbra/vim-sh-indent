@@ -1,10 +1,10 @@
 #!/bin/sh
 
 DOTFILES=(
-".bashrc"
-".bash_profile"
-".gitconfig"
-".profile"
+  ".bashrc"
+  ".bash_profile"
+  ".gitconfig"
+  ".profile"
 )
 
 if true; then
