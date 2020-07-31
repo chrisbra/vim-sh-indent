@@ -164,8 +164,8 @@ function! GetShIndent()
   " statements, executed within a here document. Keep the current indent
   elseif match(map(synstack(v:lnum, 1), 'synIDattr(v:val, "name")'), '\c\mheredoc') > -1
     return indent(v:lnum)
-  elseif s:is_comment(line) && s:is_empty(getline(v:lnum-1))
-    return indent(v:lnum)
+"  elseif s:is_comment(line) && s:is_empty(getline(v:lnum-1))
+"    return indent(v:lnum)
   endif
 
   return ind > 0 ? ind : 0
@@ -199,7 +199,7 @@ function! s:is_function_definition(line)
 endfunction
 
 function! s:is_array(line)
-  return a:line =~ '^\s*\<\k\+\>=('
+  return a:line =~ '^\s*\(local\s*\)\?\<\k\+\>=('
 endfunction
 
 function! s:is_case_label(line, pnum)
