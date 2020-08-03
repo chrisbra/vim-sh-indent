@@ -120,7 +120,7 @@ function! GetShIndent()
     while !s:is_empty(getline(i)) && i > pnum
       let i -= 1
     endw
-    if i == pnum && s:is_continuation_line(line)
+    if i == pnum && (s:is_continuation_line(line) || pline =~ '{\s*\(#.*\)\=$')
       let ind += ind2
     else
       let ind = ind2
