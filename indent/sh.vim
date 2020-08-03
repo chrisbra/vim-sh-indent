@@ -199,7 +199,7 @@ function! s:is_function_definition(line)
 endfunction
 
 function! s:is_array(line)
-  return a:line =~ '^\s*\<\k\+\>=('
+  return a:line =~ '^\s*\(local\s*\)\?\<\k\+\>=('
 endfunction
 
 function! s:is_case_label(line, pnum)
