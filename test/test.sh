@@ -17,7 +17,7 @@ for i in */; do
     if [ $? -ne 0 ]; then
       printf "Test %s:\t\t[${red}Failed${reset}]\n" ${i%%/}
       if [ -n "$1" ] && [ "${1}" = "-v" ]; then
-        diff -u --color output.sh reference.sh
+        diff -u --color reference.sh output.sh
       fi
       rc=1
     else
