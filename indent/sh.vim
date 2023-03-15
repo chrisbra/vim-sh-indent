@@ -71,6 +71,7 @@ function! s:indent_value(option)
 endfunction
 
 function! GetShIndent()
+  let mode = mode()
   let curline = getline(v:lnum)
   let lnum = prevnonblank(v:lnum - 1)
   if lnum == 0
@@ -134,7 +135,11 @@ function! GetShIndent()
   " TODO: should we do the same for other "end" lines?
   if curline =~ '^\s*\%(fi\);\?\s*\%(#.*\)\=$'
     let ind = indent(v:lnum)
-    let previous_line = searchpair('^\s*\<if\>', '', '\<fi\>\zs', 'bnW', 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote"')
+    " in insert mode, try to place the cursor after the fi statement
+    let endp = '\<fi\>' .. (mode ==? 'i' ? '\zs' : '')
+    let startp = '^\s*\<if\>'
+    let previous_line = searchpair(startp, '', endp , 'bnW', 
+          \ 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote\\|option"')
     if previous_line > 0
       let ind = indent(previous_line)
     endif
