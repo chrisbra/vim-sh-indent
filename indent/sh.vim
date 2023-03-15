@@ -296,7 +296,11 @@ function! s:is_end_expression(line)
 endfunction
 
 function! s:is_bash()
-  return get(g:, 'is_bash', 0) || get(b:, 'is_bash', 0)
+  if &ft is# 'bash' || getline(1) is# '#!/bin/bash'
+    return v:true
+  else
+    return get(g:, 'is_bash', 0) || get(b:, 'is_bash', 0)
+  endif
 endfunction
 
 let &cpo = s:cpo_save
