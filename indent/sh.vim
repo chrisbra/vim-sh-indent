@@ -72,6 +72,7 @@ endfunction
 
 function! GetShIndent()
   let mode = mode()
+
   let curline = getline(v:lnum)
   let lnum = prevnonblank(v:lnum - 1)
   if lnum == 0
@@ -170,7 +171,13 @@ function! GetShIndent()
   elseif match(map(synstack(v:lnum, 1), 'synIDattr(v:val, "name")'), '\c\mheredoc') > -1
     return indent(v:lnum)
   elseif s:is_comment(line) && s:is_empty(getline(v:lnum-1))
-    return indent(v:lnum)
+    if s:is_in_block(v:lnum)
+      " return indent of line in same block
+      return indent(lnum)
+    else
+      " use indent of current line
+      return indent(v:lnum)
+    endif
   endif
 
   return ind > 0 ? ind : 0
@@ -205,6 +212,17 @@ endfunction
 
 function! s:is_array(line)
   return a:line =~ '^\s*\(local\s*\)\?\<\k\+\>=('
+endfunction
+
+function! s:is_in_block(line)
+  " checks whether a:line is whithin a 
+  " block e.g. a shell function
+  " foo() {
+  " ..
+  " }
+  let prevline = searchpair('{', '', '}', 'bnW', 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote"')
+  let nextline = searchpair('{', '', '}', 'nW', 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote"')
+  return a:line > prevline && a:line < nextline
 endfunction
 
 function! s:is_case_label(line, pnum)
