@@ -86,7 +86,10 @@ function! GetShIndent()
 
   " Check contents of previous lines
   " should not apply to e.g. commented lines
-  if line =~ '^\s*\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>\($\|\s\)' ||
+
+  if s:start_block(line)
+    let ind += s:indent_value('default')
+  elseif line =~ '^\s*\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>\($\|\s\)' ||
         \  (&ft is# 'zsh' && line =~ '^\s*\<\%(if\|then\|do\|else\|elif\|case\|while\|until\|for\|select\|foreach\)\>\($\|\s\)')
     if !s:is_end_expression(line)
       let ind += s:indent_value('default')
@@ -299,15 +302,8 @@ function! s:end_block(line)
 endfunction
 
 function! s:start_block(line)
-  return a:line =~ '{\s*\(#.*\)\?$'
-endfunction
-
-function! s:find_start_block(lnum)
-  let i = a:lnum
-  while i > 1 && !s:start_block(getline(i))
-    let i -= 1
-  endwhile
-  return i
+#  return a:line =~ '{\s*\(#.*\)\?$'
+  return a:line =~ '^[^#]*[{(]\s*\(#.*\)\?$'
 endfunction
 
 function! s:is_comment(line)

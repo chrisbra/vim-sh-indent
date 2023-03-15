@@ -6,6 +6,7 @@ vim --clean \
     -c ':unlet! b:did_indent' \
     -c ':delfunc! GetShIndent' \
     -c ':so ../../indent/sh.vim' \
+    -c ':let g:is_bash=1' \
     -c ':set sw=0 sts=-1 ts=2 et' \
     -c 'norm! gg=G' \
     -c ':saveas! output.sh' \

@@ -1,34 +1,22 @@
-stc(){
-  local attrs=(
-  ["Bold"]="1"    # Bold text only, keep colors
-        # this
-        ["Bold"]="1"    # Bold text only, keep colors
-# Basic         High Intensity   Background        High Intensity Background
-["Black"]="30"  ["IBlack"]="90"  ["OnBlack"]="40"  ["OnIBlack"]="100"
+
+# make the actual i3 config file from pieces
+#
+mki3conf(){
+    (
+      cd ~/.config/i3 || return
+        make && i3-msg reload
+      )
+    }
+
+  (
+  cd ~/.config/i3 || return
+  make && i3-msg reload
 )
-}
 
-std(){
-  local attrs=(
-  ["Bold"]="1"    # Bold text only, keep colors
-
-        # this
-        ["Bold"]="1"    # Bold text only, keep colors
-
-# Basic         High Intensity   Background        High Intensity Background
-["Black"]="30"  ["IBlack"]="90"  ["OnBlack"]="40"  ["OnIBlack"]="100"
+(
+(
+cd ~/.config/i3 || return
+make && i3-msg reload
 )
-}
-
-ste(){
-  local attrs
-  attrs=(
-    ["Bold"]="1"    # Bold text only, keep colors
-
-        # this
-        ["Bold"]="1"    # Bold text only, keep colors
-
-  # Basic         High Intensity   Background        High Intensity Background
-  ["Black"]="30"  ["IBlack"]="90"  ["OnBlack"]="40"  ["OnIBlack"]="100"
 )
-}
+
