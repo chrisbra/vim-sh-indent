@@ -9,4 +9,11 @@ function variables(){
   local test3=(
     "test" "test3"
   )
+  typeset -ua test4=(
+    "test" "test4"
+  )
+  declare -a inline=("also work") multiline=(
+    "multiple" "values"
+  )
+  declare -l var="VALUE"
 }

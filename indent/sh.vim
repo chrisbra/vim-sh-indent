@@ -219,7 +219,7 @@ function! s:is_function_definition(line)
 endfunction
 
 function! s:is_array(line)
-  return a:line =~ '^\s*\(local\s\+\)\?\<\k\+\>=('
+  return a:line =~ '^\s*\(\(declare\|typeset\|local\)\s\+\(-[Aalrtu]\+\s\+\)\?\)\?\<\k\+\>=('
 endfunction
 
 function! s:is_in_block(line)
