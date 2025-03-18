@@ -317,7 +317,6 @@ function! s:end_block(line)
 endfunction
 
 function! s:start_block(line)
-#  return a:line =~ '{\s*\(#.*\)\?$'
   return a:line =~ '^[^#]*[{(]\s*\(#.*\)\?$'
 endfunction
 
