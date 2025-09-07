@@ -27,3 +27,13 @@ function lastLineClosingAfterContinuationWithComment() {
 echo "test multiline without function" \
 && echo "should be indented"
 echo "should not be indented"
+
+# Example from https://github.com/chrisbra/vim-sh-indent/issues/42
+breakIndentation() {
+    echo hello \
+        > /dev/null
+    }
+
+    wrong(){
+        echo "Wrong formatting"
+    }
