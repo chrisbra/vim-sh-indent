@@ -7,6 +7,7 @@
 " License:             Vim (see :h license)
 " Repository:          https://github.com/chrisbra/vim-sh-indent
 " Changelog:
+"          20260120  - improve indent for blocks with redirects or pipes
 "          20250906  - indent function closing properly on multiline commands
 "          20250318  - Detect local arrays in functions
 "          20241411  - Detect dash character in function keyword for
@@ -117,8 +118,10 @@ function! GetShIndent()
     if pnum == 0 || !s:is_continuation_line(pline)
       let ind += s:indent_value('continuation-line')
     endif
-  elseif s:end_block(line) && !s:start_block(line)
-    let ind -= s:indent_value('default')
+  elseif s:end_block(line) && !s:start_block(line) && !s:end_block_has_redirect(line)
+    if !s:is_in_block(v:lnum)
+      let ind -= s:indent_value('default')
+    endif
   elseif pnum != 0 &&
         \ s:is_continuation_line(pline) &&
         \ !s:end_block(curline) &&
@@ -146,12 +149,12 @@ function! GetShIndent()
     " in insert mode, try to place the cursor after the fi statement
     let endp = '\<fi\>' .. (mode ==? 'i' ? '\zs' : '')
     let startp = '^\s*\<if\>'
-    let previous_line = searchpair(startp, '', endp , 'bnW', 
+    let previous_line = searchpair(startp, '', endp , 'bnW',
           \ 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote\\|option"')
     if previous_line > 0
       let ind = indent(previous_line)
     endif
-  elseif line =~ '^\s*\%(then\|do\|else\|elif\|done\|end\)\>' || s:end_block(line)
+  elseif line =~ '^\s*\%(then\|do\|else\|elif\|done\|end\)\>' || (s:end_block(line) && !s:end_block_has_redirect(line))
     let ind -= s:indent_value('default')
   elseif line =~ '^\s*esac\>' && s:is_case_empty(getline(v:lnum - 1))
     let ind -= s:indent_value('default')
@@ -188,7 +191,7 @@ function! GetShIndent()
   endif
 
   " Special case: if the current line is a closing '}', align with matching '{'
-  if curline =~ '^\s*}\s*$'
+  if curline =~ '^\s*}\s*$' || s:end_block_has_redirect(curline)
     let match_lnum = searchpair('{', '', '}', 'bnW',
       \ 'synIDattr(synID(line("."),col("."), 1),"name") =~? "comment\\|quote"')
     if match_lnum > 0
@@ -233,7 +236,7 @@ function! s:is_array(line)
 endfunction
 
 function! s:is_in_block(line)
-  " checks whether a:line is whithin a 
+  " checks whether a:line is whithin a
   " block e.g. a shell function
   " foo() {
   " ..
@@ -326,6 +329,10 @@ endfunction
 
 function! s:is_end_expression(line)
   return a:line =~ '\<\%(fi\|esac\|done\|end\)\>\s*\%(#.*\)\=$'
+endfunction
+
+function! s:end_block_has_redirect(line)
+  return a:line =~ '^\s*}\s*[\|><]'
 endfunction
 
 function! s:is_bash()
