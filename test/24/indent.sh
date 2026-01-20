@@ -56,4 +56,38 @@ multi_group() {
         echo "both groups done"
 }
 
+### https://github.com/chrisbra/vim-sh-indent/issues/37 - START
+# process / ps stuff
+# shellcheck disable=SC2046
+{
+        pspg() {
+                ps -lf $( pgrep -f "$@" )
+        }
+
+        pspgt() {
+                ps -o lstart,cmd $( pgrep -f "$@" )
+        }
+}
+
+{
+        just-a command not-a function
+
+        another command not-a function
+}
+
+# process / ps stuff
+# shellcheck disable=SC2046
+{
+        pspg(){
+                ps -lf $( pgrep -f "$@" )
+        }
+
+        just-a command not-a function
+
+        pspgt(){
+                ps -o lstart,cmd $( pgrep -f "$@" )
+        }
+}
+### https://github.com/chrisbra/vim-sh-indent/issues/37 - END
+
 # vim:sw=2:sts=-1:ts=2
