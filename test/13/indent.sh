@@ -1,3 +1,5 @@
-if a; then
-  b if
-fi
+#!/bin/sh
+
+a |
+  b
+c

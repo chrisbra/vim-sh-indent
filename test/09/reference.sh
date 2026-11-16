@@ -1,10 +1,5 @@
 #!/bin/bash
 
-func() {
-  if 1; then
-    # a comment containing the if keyword
-    echo
-  else
-    echo
-  fi
+function g {
+  grep --color=always -nre "$1" ./*
 }

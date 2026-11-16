@@ -1,13 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-test() {
-  echo "something"
-
-  {
-    echo "more"
-    echo "even more"
-  } | tee /dev/null
-
-  # TODO: this is most-likely wrong, it should be indented by 1 indent like line 4
-  echo "last"
-}
+if [[ -z "somecondition" ]]; then
+  if [[ -z "thircondition" ]]; then
+    # below command will also break formatting as it has if keyword
+    echo "if in double quoted string"
+    echo 'if in single quoted string'
+  fi
+fi

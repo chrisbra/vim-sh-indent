@@ -1,13 +1,6 @@
-#!/bin/bash
+#!/bin/sh
+. ../common.sh
 
-# like test 19, but this time
-# do not handle it as 'bash'
-vim --clean --not-a-term \
-    -c ':unlet! b:did_indent' \
-    -c ':delfunc! GetShIndent' \
-    -c ':so ../../indent/sh.vim' \
-    -c ':let g:is_bash=1' \
+run_test \
     -c ':set sw=0 sts=-1 ts=2 et' \
-    -c 'norm! gg=G' \
-    -c ':saveas! output.sh' \
-    -c ':q!' indent.sh
+    -c 'norm! gg=G'

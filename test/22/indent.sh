@@ -1,19 +1,39 @@
 #!/bin/bash
 # vim: set ft=bash sw=2 noet:
 
-function variables(){
-local test1="test1"
-test2=(
-"test" "test2"
-)
-local test3=(
-"test" "test3"
-)
-typeset -ua test4=(
-"test" "test4"
-)
-declare -a inline=("also work") multiline=(
-"multiple" "values"
-)
-declare -l var="VALUE"
+function lastLineEmptyInFunctionAfterContinuation() {
+[[ "$#" != "1" || "$1" = "-h" || "$1" = "--help" ]] \
+&& echo "show help" && exit
+
 }
+
+function lastLineCommentAfterContinuation() {
+[[ "$#" != "1" || "$1" = "-h" || "$1" = "--help" ]] \
+&& echo "show help" && exit
+# if last line is not a continuation, but a comment, it should indent correctly
+}
+
+function lastLineClosingAfterContinuation() {
+[[ "$#" != "1" || "$1" = "-h" || "$1" = "--help" ]] \
+&& echo "show help" && exit
+}
+
+function lastLineClosingAfterContinuationWithComment() {
+# Test Comment
+[[ "$#" != "1" || "$1" = "-h" || "$1" = "--help" ]] \
+&& echo "show help" && exit
+}
+
+echo "test multiline without function" \
+&& echo "should be indented"
+echo "should not be indented"
+
+# Example from https://github.com/chrisbra/vim-sh-indent/issues/42
+breakIndentation() {
+    echo hello \
+        > /dev/null
+    }
+
+    wrong(){
+        echo "Wrong formatting"
+    }

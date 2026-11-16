@@ -1,5 +1,8 @@
 #!/bin/sh
 
-a |
-  b
-c
+f(){
+  for fn in a b c
+  do
+    for-script $fn
+  done
+}

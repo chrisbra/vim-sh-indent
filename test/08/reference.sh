@@ -1,4 +1,10 @@
-# this comment has 'if' in it
-# add another comment
-# this comment does not
-# and another comment
+#!/bin/bash
+
+func() {
+  if 1; then
+    # a comment containing the if keyword
+    echo
+  else
+    echo
+  fi
+}

@@ -1,22 +1,20 @@
+#!/bin/bash
+# vim: set ft=bash sw=2 noet:
 
-# make the actual i3 config file from pieces
-#
-mki3conf(){
-    (
-      cd ~/.config/i3 || return
-        make && i3-msg reload
-      )
-    }
+a = 10
+b = 20
 
-  (
-  cd ~/.config/i3 || return
-  make && i3-msg reload
-)
+function add() {
+c = $((a + b))
+}
 
-(
-(
-cd ~/.config/i3 || return
-make && i3-msg reload
-)
-)
+function print {
+# do nothing
+}
 
+if [[ $c -ge 15 ]];
+then
+print("ok")
+else
+print("not ok")
+fi

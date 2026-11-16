@@ -1,6 +1,4 @@
-if a; then
-    b
-    if c; then
-        d
-    fi
-fi
+# this comment has 'if' in it
+# add another comment
+# this comment does not
+# and another comment

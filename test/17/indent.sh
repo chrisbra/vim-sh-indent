@@ -1,13 +1,19 @@
-#!/bin/bash
-
-DOTFILES=(
-".bashrc"
-".bash_profile"
-".gitconfig"
-".profile"
-)
+#!/bin/sh
 
 if true; then
-    echo 'pipe beginning'
-        sed 's/beginn/end/'
+if false; then
+  cmd with --if-option
+fi
+fi
+
+if true; then
+  if false; then
+    # fi
+fi
+fi
+
+if true; then
+  if false; then
+      cmd with --fi-option
+fi
 fi

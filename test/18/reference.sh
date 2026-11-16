@@ -1,19 +1,34 @@
-#!/bin/sh
+stc(){
+  local attrs=(
+    ["Bold"]="1"    # Bold text only, keep colors
+    # this
+    ["Bold"]="1"    # Bold text only, keep colors
+    # Basic         High Intensity   Background        High Intensity Background
+    ["Black"]="30"  ["IBlack"]="90"  ["OnBlack"]="40"  ["OnIBlack"]="100"
+  )
+}
 
-if true; then
-  if false; then
-    cmd with --if-option
-  fi
-fi
+std(){
+  local attrs=(
+    ["Bold"]="1"    # Bold text only, keep colors
 
-if true; then
-  if false; then
-    # fi
-  fi
-fi
+    # this
+    ["Bold"]="1"    # Bold text only, keep colors
 
-if true; then
-  if false; then
-    cmd with --fi-option
-  fi
-fi
+    # Basic         High Intensity   Background        High Intensity Background
+    ["Black"]="30"  ["IBlack"]="90"  ["OnBlack"]="40"  ["OnIBlack"]="100"
+  )
+}
+
+ste(){
+  local attrs
+  attrs=(
+    ["Bold"]="1"    # Bold text only, keep colors
+
+    # this
+    ["Bold"]="1"    # Bold text only, keep colors
+
+    # Basic         High Intensity   Background        High Intensity Background
+    ["Black"]="30"  ["IBlack"]="90"  ["OnBlack"]="40"  ["OnIBlack"]="100"
+  )
+}

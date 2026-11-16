@@ -1,26 +1,13 @@
-ste(){
-local attrs=(
-"asdf"
-"asdf2"
-"asdf3"
-)
-}
+#!/bin/bash
 
-ste(){
-attrs=(
-"asdf"
-# asdf
-"asdf2"
-                 # asdf
-"asdf3"
+DOTFILES=(
+".bashrc"
+".bash_profile"
+".gitconfig"
+".profile"
 )
-}
 
-ste(){
-local attrs
-attrs=(
-"asdf"
-"asdf2"
-"asdf3"
-)
-}
+if true; then
+    echo 'pipe beginning'
+        sed 's/beginn/end/'
+fi
