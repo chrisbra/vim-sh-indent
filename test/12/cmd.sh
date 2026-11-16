@@ -1,6 +1,6 @@
 #!/bin/sh
 
-vim --clean --no-a-term \
+vim --clean --not-a-term \
     -c ':unlet! b:did_indent' \
     -c ':delfunc! GetShIndent' \
     -c ':so ../../indent/sh.vim' \
