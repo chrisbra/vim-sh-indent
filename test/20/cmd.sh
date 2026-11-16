@@ -2,7 +2,7 @@
 
 # like test 19, but this time
 # do not handle it as 'bash'
-vim --clean \
+vim --clean --not-a-term \
     -c ':unlet! b:did_indent' \
     -c ':delfunc! GetShIndent' \
     -c ':so ../../indent/sh.vim' \
